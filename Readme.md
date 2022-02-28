@@ -16,6 +16,6 @@
 - JSX(JS + HTML)
 
 [리액트 기본 생성 프로젝트]
-- > ceate-react-app
+- > create-react-app
 - > dotnet new react
 - > npm start
