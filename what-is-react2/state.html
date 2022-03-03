@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+
+        class Component extends React.Component{
+            // 클래스컴포넌트에서 state는 항상 객체여야함
+            // state 사용방법1
+            // state = {
+            //     count: 0,
+            // };
+
+            // state 사용방법2
+            constructor(props){
+                super(props);
+                // 여기까지는 생성자 함수 호출
+
+                this.state = {count: 0};
+            }
+
+            render(){
+                return (
+                    <div>
+                        <h1>{this.props.message} 이것은 클래스로 만든 컴포넌트 입니다.</h1>
+                        <p>{this.state.count}</p>
+                    </div>
+                );
+            }
+
+            // 최초에 render 메소드가 실행이 돼서 그림이 그려진 직 후에 실행
+            // 라이프사이클 시간에 다시 공부 예정
+            componentDidMount(){
+                setTimeout(() => {
+                    // 직접 프로퍼티 안의 값을 변경하는것은 반영이 안됨
+                    // this.state.count = this.state.count + 1;
+
+                    // 약속에 따른 문법1
+                    // this.setState({
+                    //     count: this.state.count + 1,
+                    // });
+
+                    // 약속에 따른 문법2
+                    this.setState((previousState) => {
+                        const newState = { count : previousState.count + 1};
+                        return newState;
+                    });
+                }, 1000);
+            }
+
+            static defaultProps = {
+                message: '기본값!',
+            }
+        }
+
+        ReactDOM.render(
+            <Component message="기본값 아님!" />,
+            document.querySelector("#root")
+        );
+    </script>
+</body>
+</html>
