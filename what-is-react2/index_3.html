@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+
+        // 4. 복잡한 리액트 엘리먼트 모임(React.createElement의 한계)
+        // 예시)
+        // <div>
+        //     <div>
+        //         <h1>주제</h1>
+        //         <ul>
+        //             <li>React</li>
+        //             <li>Vue</li>
+        //         </ul>
+        //     </div>
+        // </div>
+
+        // ReactDOM.render(
+        //     React.createElement(
+        //         'div',
+        //         null,
+        //         React.createElement(
+        //             'div',
+        //             null,
+        //             React.createElement('h1', null, '주제'),
+        //             React.createElement('ul', null,
+        //                 React.createElement('li', null, 'React'),
+        //                 React.createElement('li', null, 'Vue'),
+        //             )
+        //         )
+        //     ),
+        //     document.querySelector('#root')
+        // );
+
+        
+        // 우리가 작성한 어떤 코드 => 순수하게 실행할 수 있는 자바스크립트
+        // babel에 의해 진행됨(브라우저 호환이 주된 기능, 위에서 설명한 기능도 함께 함)
+
+        // JSX
+        // 1. 최상위 요소가 하나여야 한다.
+        // 2. 자식들을 바로 랜더링 하고싶으면 <>자식들</> 사용 => Fragment
+        // 3. 자바스크립트 표현식을 사용해려면, {표현식} 이용
+        // 4. if문은 사용할 수 없음 => 삼항연산자 혹은 &&를 사용
+        // 5. style을 이용해 인라인 스타일링 가능
+        // 6. class 대신 className 사용
+        // 7. 자식요소가 있으면 꼭 닫아야하고 자식요소가 없으면 열면서 닫아야함
+        // => <p>어쩌구</p> , <br />
+
+        const title = "주제";
+        ReactDOM.render(
+            <div>
+                <div>
+                    <h1>{title}</h1>
+                    <ul>
+                        <li>React</li>
+                        <li>Vue</li>
+                    </ul>
+                </div>
+            </div>,
+            document.querySelector('#root')
+        );
+    </script>
+</body>
+</html>
