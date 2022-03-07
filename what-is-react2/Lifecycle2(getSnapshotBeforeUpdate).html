@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        let i = 0;
+        class App extends React.Component{
+            state = {
+                list: []
+            }
+
+            render() {
+                return(
+                    <div id="list" style={{height: 100, overflow: 'scroll'}}>
+                        {this.state.list.map(i => {
+                            return <div>{i}</div>;
+                        })}
+                    </div>
+                )
+            }
+
+            componentDidMount() {
+                setInterval(() => {
+                    this.setState(state => ({
+                        list: [...state.list, i++],
+                    }))
+                }, 1000)
+            }
+
+
+            // 스크롤도 같이 딸려 내려가기 귀해서 두 사이클을 지정하는 것
+            
+            getSnapshotBeforeUpdate(prevProps, prevState) {
+                if(prevState.list.length === this.state.list.length) return null;
+                const list = document.querySelector('#list');
+                return list.scrollHeight - list.scrollTop;
+            }
+
+            componentDidUpdate(prevProps, prevState, snapshot){
+                console.log(snapshot);
+                if(snapshot === null) return;
+                const list = document.querySelector('#list');
+                list.scrollTop = list.scrollHeight - snapshot;
+            }
+        }
+
+        ReactDOM.render(
+            <App name="Mark" />,
+            document.querySelector("#root")
+        );
+    </script>
+</body>
+</html>

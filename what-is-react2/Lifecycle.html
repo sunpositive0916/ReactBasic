@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        class App extends React.Component{
+            state = {
+                age: 39,
+            }
+            interval = null;
+            /************** 생성 및 마운트 시작 **************/
+            // 생성되는 구간
+            constructor(props) {
+                super(props);
+                console.log('constructor', props);
+            }
+            // Mount
+            render() {
+                console.log('render');
+                return (
+                    <div>
+                        <h2>Hello {this.props.name} - {this.state.age}</h2>
+                    </div>
+                )
+            }
+            // 기존의 리액트 라이프사이클 훅이 있기 때문에 알아서 부름
+            componentWillMount() {
+                console.log('componentWillMount');
+            }
+            componentDidMount() {
+                console.log('componentDidMount');
+
+                // 보통 타이머, API 처리를 함
+                // componentWillUnmount에서 언마운트 해야하기 때문에 연결시키기 위해서는 멤버변수로 사용
+                this.interval = setInterval(() => {
+                // console.log('setInterval');
+                this.setState(state => ({...state, age: state.age + 1}))
+                }, 1000);
+            }
+            /************** 생성 및 마운트 끝 **************/
+
+
+            /************** props, state 변경 시작 **************/
+            componentWillReceiveProps(nextProps) {
+                console.log('componentWillReceiveProps', nextProps);
+            }
+            shouldComponentUpdate(nextProps, nextState) {
+                console.log('shouldComponentUpdate', nextProps, nextState);
+
+                return true;
+                // true인 경우에는 다음 단계인 componentWillUpdate로 넘어가지만 false이면 다음 단계로 넘어가지 않음
+            }
+            componentWillUpdate(nextProps, nextState) {
+                console.log('componentWillUpdate', nextProps, nextState);
+            }
+            // 업데이트 후에 발생하니까 prev 인자로 바뀜
+            componentDidUpdate(prevProps, prevState) {
+                console.log('componentDidUpdate', prevProps, prevState);
+            }
+            /************** props, state 변경 끝 **************/
+
+            // 타이머가 실행되다 컴포넌트가 사라지면 타이머도 사라짐(컴포넌트 삭제처리는 실습하지 않음)
+            componentWillUnmount() {
+                clearInterval(this.interval);
+            }
+        }
+
+        ReactDOM.render(
+            <App name="Mark" />,
+            document.querySelector("#root")
+        );
+    </script>
+</body>
+</html>
