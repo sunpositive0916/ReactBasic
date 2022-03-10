@@ -15,6 +15,7 @@
     - Jest를 통해 test code를 실행
 - npm run eject
     - react-scripts eject
+    - react-scripts가 사라지고 cra에 의해 사용되던 각종 패키지가 나타나게 됨
 
 <hr>
 
