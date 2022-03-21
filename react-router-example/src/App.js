@@ -1,13 +1,18 @@
-import { BrowserRouter, Route } from "react-router-dom";
-import { Switch } from "react-router-dom/cjs/react-router-dom.min";
+import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import About from './pages/About';
 import Home from "./pages/Home";
 import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
+import Links from "./components/Links";
 
 function App() {
   return (
     <BrowserRouter>
+    {/*
+    리액트 애플리케이션의 특성을 담은 경로가 아니라 페이지 이동이기 때문에 a링크는 적절하지 않음
+    <a href="/">Home</a>
+    */}
+      <Links />
       <Switch>
         <Route path="/profile/:id" component={Profile} />
         <Route path="/profile" component={Profile} />
