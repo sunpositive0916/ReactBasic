@@ -2,6 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import StyledButton from './components/StyledButton';
 import styled from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
+import StyledA from './components/StyledA';
 
 const PrimaryStyledButton = styled(StyledButton)`
   background:palevioletred;
@@ -29,9 +31,16 @@ const StyledMyButton = styled(MyButton)`
   }
 `
 
+const GlobalStyle = createGlobalStyle`
+button{
+  color:yellow;
+}
+`;
+
 function App() {
   return (
     <div className="App">
+      <GlobalStyle />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -42,6 +51,8 @@ function App() {
           <StyledButton as={UppercaseButton}>button</StyledButton>
           <StyledMyButton>button</StyledMyButton>
           <StyledMyButton color="green">button</StyledMyButton>
+
+          <StyledA href="https://google.com">태그</StyledA>
         </p>
       </header>
     </div>
