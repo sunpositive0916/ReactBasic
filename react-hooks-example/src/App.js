@@ -5,17 +5,21 @@ import Example2 from './components/example2';
 import Example3 from './components/example3';
 import Example4 from './components/example4';
 import Example5 from './components/example5';
+import useWindowWidth from './hooks/useWindowWidth';
 
 function App() {
+  const width = useWindowWidth();
+  
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <Example1 />
+        {/* <Example1 />
         <Example2 />
         <Example3 />
         <Example4 />
-        <Example5 />
+        <Example5 /> */}
+        {width}
       </header>
     </div>
   );
