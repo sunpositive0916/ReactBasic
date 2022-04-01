@@ -6,9 +6,14 @@ import Example3 from './components/example3';
 import Example4 from './components/example4';
 import Example5 from './components/example5';
 import useWindowWidth from './hooks/useWindowWidth';
+import withHasMounted from './hocs/withHasMounted';
+import useHasMounted from './hooks/useHasMounted';
 
-function App() {
+function App({hasMounted}) {
   const width = useWindowWidth();
+  const hasMountedFromHooks = useHasMounted();
+
+  console.log(hasMounted, hasMountedFromHooks);
   
   return (
     <div className="App">
@@ -25,4 +30,4 @@ function App() {
   );
 }
 
-export default App;
+export default withHasMounted(App);
