@@ -1,5 +1,7 @@
 # 리액트란
+
 `자바스크립트 라이브러리`
+
 - 페이스북에서 제작(오픈소스)
 - UI를 담당하는 라이브러리
 - 웹과 모바일을 위한 하나의 완성된 자바스크립트 라이브러리
@@ -10,49 +12,57 @@
 - `A Javascript library for building user interfaces`
 
 [리액트 인기 있는 이유]
+
 - 컴포넌트
 - Virtual DOM
 - 페이스북에서 관리하는 오픈소스
 - JSX(JS + HTML)
 
 [리액트 기본 생성 프로젝트]
+
 - > create-react-app
 - > dotnet new react
 - > npm start
 
-
 ### SPA 프로젝트 배포 예제
+
 [serve 패키지로 배포]
 serve build
 serve -s build(리액트 앱에서 직접 404 처리를 할 예정이므로 -s옵션을 붙여야함)
 
 [AWS S3에 배포]
+
 - 버킷 만들기(이름, 리전만 선택)
 - 파일 업로드(build 폴더 안에 있는 전체 파일)
 - 폴더추가(파일 외에 있는 폴더 static)
+
 * 속성탭
+
 - 정적 웹 사이트 호스팅 편집 활성화
 - 정적 웹사이트 호스팅 체크
 - 인덱스 문서, 오류 문서 : index.html
+
 * 권한 탭
+
 - 퍼블릭 엑세스 차단 활성화 체크 삭제
 - 버킷정책 편집
 - 정책 생성기를 통해 Json 생성
-/////////////// 예시 ///////////////
- {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "PublicReadGetObject",
-            "Effect": "Allow",
-            "Principal": "*",
-            "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::버킷 이름/*"
-        }
-    ]
-}
+  /////////////// 예시 ///////////////
+  {
+  "Version": "2012-10-17",
+  "Statement": [
+  {
+  "Sid": "PublicReadGetObject",
+  "Effect": "Allow",
+  "Principal": "*",
+  "Action": "s3:GetObject",
+  "Resource": "arn:aws:s3:::버킷 이름/*"
+  }
+  ]
+  }
 
 [NginX로 배포]
+
 - AWS EC2를 생성
 - EC2 대시보드에서 인스턴스 시작
 - 우분투 서버 선택(별다른 설정 없이 넘김)
@@ -69,7 +79,7 @@ serve -s build(리액트 앱에서 직접 404 처리를 할 예정이므로 -s�
 - ~$ git clone https://github.com/nhn-kai/tic-tac-toe.git
 - ~$ cd tic-tac-toe
 - ~/tic-tac-toe$ url -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-(끝에 있는 export~ 스크립트 복사)
+  (끝에 있는 export~ 스크립트 복사)
 - ~/tic-tac-toe$ nano ~/.profile(여기에 붙여넣기)
 - ~/tic-tac-toe$ exit
 - > ssh ubuntu@3.36.117.32 -i reactserve.pem
@@ -83,7 +93,8 @@ serve -s build(리액트 앱에서 직접 404 처리를 할 예정이므로 -s�
 - ~/tic-tac-toe$ sudo apt-key add nginx_signing.key
 - ~/tic-tac-toe$ sudo rm -rf nginx_signing.key
 - ~/tic-tac-toe$ sudo nano /etc/apt/sources.list
-``` 제일 아래쪽에 두줄 추가
+
+````제일 아래쪽에 두줄 추가
 deb http://nginx.org/packages/mainline/ubuntu/ trusty nginx
 deb-src http://nginx.org/packages/mainline/ubuntu/ trusty nginx
 ```컨트롤 에스 와이
@@ -106,13 +117,16 @@ server {
         try_files $uri $uri/ /index.html;
     }
 }
-```
+````
+
 - ~/tic-tac-toe$ sudo service nginx restart
 
 [node.js express로 배포]
+
 > npm i express
 > code .
-server.js 파일 생성
+> server.js 파일 생성
+
 ```
 const express = require('express');
 const path = require('path');
@@ -128,5 +142,25 @@ app.get('*', (req, res) => {
 
 app.listen(9000);
 ```
+
 > node server.js
-http://localhost:9000/ 에서 확인 가능
+> http://localhost:9000/ 에서 확인 가능
+
+## 리액트 웹앱의 서버사이드 렌더링 이해하기
+
+[ReactDOMServer]
+
+[Server Side Rendering]
+
+- 서버에서 응답을 가져올 때, 기존처럼 static file만을 가져오는 것이 아니고, 먼저 서버에서 응답 값을 만들어서 내려주고, 그 후에 static file을 내려줌
+- static file을 다 내려받고, 리액트 앱을 브라우저에서 실행한 뒤에는 SPA처럼 동작하게 됨
+
+[React Server Side Rendering]
+
+- React Component를 브라우저가 아니라 Node.js에서 사용
+- ReactDOMServer.renderToString(<App />);
+  - 결과가 문자열
+  - 이것을 응답으로 내려줌
+- 라우팅, 리덕스와 같은 처리를 서버에서 진행하고 내려줌
+  - 복잡, 어렵
+- JSX가 포함된 리액트 코드를 서버에서 읽을 수 있도록 babel 설정을 해야함
